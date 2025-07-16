@@ -23,6 +23,8 @@ public partial class TrabajadoresContext : DbContext
 
     public virtual DbSet<Trabajadore> Trabajadores { get; set; }
 
+    public virtual DbSet<TrabajadorDTO> TrabajadorDTOs { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Name=ConexionSQL");
 
@@ -96,6 +98,9 @@ public partial class TrabajadoresContext : DbContext
                 .HasForeignKey(d => d.IdProvincia)
                 .HasConstraintName("FK__Trabajado__IdPro__412EB0B6");
         });
+
+        modelBuilder.Entity<TrabajadorDTO>().HasNoKey();
+        modelBuilder.Entity<TrabajadorDTO>().ToView(null);
 
         OnModelCreatingPartial(modelBuilder);
     }

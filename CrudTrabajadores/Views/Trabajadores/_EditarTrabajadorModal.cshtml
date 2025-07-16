@@ -1,0 +1,50 @@
+﻿@model TrabajadoresPrueba.Models.Trabajadore
+
+<div class="modal fade" id="editarModal-@Model.Id" tabindex="-1" aria-labelledby="editarModalLabel-@Model.Id" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form asp-action="Edit" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Trabajador</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    @Html.HiddenFor(m => m.Id)
+
+                    <div class="mb-3">
+                        <label asp-for="TipoDocumento" class="form-label"></label>
+                        <input asp-for="TipoDocumento" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="NumeroDocumento" class="form-label"></label>
+                        <input asp-for="NumeroDocumento" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Nombres" class="form-label"></label>
+                        <input asp-for="Nombres" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Sexo" class="form-label"></label>
+                        <input asp-for="Sexo" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="IdDepartamento" class="form-label"></label>
+                        <select asp-for="IdDepartamento" class="form-control" asp-items="ViewBag.IdDepartamento"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="IdProvincia" class="form-label"></label>
+                        <select asp-for="IdProvincia" class="form-control" asp-items="ViewBag.IdProvincia"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="IdDistrito" class="form-label"></label>
+                        <select asp-for="IdDistrito" class="form-control" asp-items="ViewBag.IdDistrito"></select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

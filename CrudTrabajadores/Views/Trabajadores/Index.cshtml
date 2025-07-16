@@ -1,0 +1,125 @@
+﻿@model IEnumerable<TrabajadoresPrueba.Models.TrabajadorDTO>
+
+@{
+    ViewData["Title"] = "Listar";
+}
+
+<h1 class="mb-3">Lista Trabajadores</h1>
+
+<p>
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crearModal">
+        Crear
+    </button>
+
+    @await Html.PartialAsync("_CrearTrabajadorModal", new TrabajadoresPrueba.Models.Trabajadore())
+</p>
+
+<form method="get" asp-action="Index" class="row g-3 mb-3">
+    @{
+        var sexoSel = Convert.ToString(ViewBag.SexoSeleccionado);
+    }
+    <div class="col-auto">
+        <select name="sexo" class="form-select">
+            @if (sexoSel == "")
+            {
+                <option value="" selected>-- Todos --</option>
+            }
+            else
+            {
+                <option value="">-- Todos --</option>
+            }
+
+            @if (sexoSel == "M")
+            {
+                <option value="M" selected>Masculino</option>
+            }
+            else
+            {
+                <option value="M">Masculino</option>
+            }
+
+            @if (sexoSel == "F")
+            {
+                <option value="F" selected>Femenino</option>
+            }
+            else
+            {
+                <option value="F">Femenino</option>
+            }
+        </select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-info">Filtrar</button>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Tipo Doc.</th>
+            <th>N° Documento</th>
+            <th>Nombre</th>
+            <th>Sexo</th>
+            <th>Departamento</th>
+            <th>Provincia</th>
+            <th>Distrito</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="@(ViewBag.SexoSeleccionado != null && ViewBag.SexoSeleccionado != "" ? (item.Sexo == "M" ? "table-primary" : item.Sexo == "F" ? "table-warning" : "") : "")">
+                <td>@Html.DisplayFor(modelItem => item.TipoDocumento)</td>
+                <td>@Html.DisplayFor(modelItem => item.NumeroDocumento)</td>
+                <td>@Html.DisplayFor(modelItem => item.Nombres)</td>
+                <td>@Html.DisplayFor(modelItem => item.Sexo)</td>
+                <td>@Html.DisplayFor(modelItem => item.NombreDepartamento)</td>
+                <td>@Html.DisplayFor(modelItem => item.NombreProvincia)</td>
+                <td>@Html.DisplayFor(modelItem => item.NombreDistrito)</td>
+                <td>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarModal-@item.Id">
+                        Editar
+                    </button>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal-@item.Id">
+                        Eliminar
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@foreach (var item in Model)
+{
+    @await Html.PartialAsync("_EditarTrabajadorModal", new TrabajadoresPrueba.Models.Trabajadore {
+    Id = item.Id,
+        TipoDocumento = item.TipoDocumento,
+        NumeroDocumento = item.NumeroDocumento,
+        Nombres = item.Nombres,
+        Sexo = item.Sexo,
+        IdDepartamento = item.IdDepartamento,
+        IdProvincia = item.IdProvincia,
+        IdDistrito = item.IdDistrito
+    })
+
+    <div class="modal fade" id="eliminarModal-@item.Id" tabindex="-1" aria-labelledby="eliminarModalLabel-@item.Id" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form asp-action="Delete" asp-route-id="@item.Id" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="eliminarModalLabel-@item.Id">Confirmar Eliminación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Está seguro que desea eliminar a <strong>@item.Nombres</strong>?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
