@@ -1,0 +1,20 @@
+# Carpetas de Visual Studio
+.vs/
+*.user
+*.suo
+
+# Archivos de compilación
+bin/
+obj/
+
+# Archivos de configuración local
+appsettings.Development.json
+
+# Archivos temporales
+*.log
+*.tmp
+*.temp
+
+# Archivos ocultos de Windows
+Thumbs.db
+Desktop.ini
